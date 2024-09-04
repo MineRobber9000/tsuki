@@ -7,12 +7,12 @@ config.DEFAULT_CONFIG = {
     PROMPT = ">>> ";
     -- Prompt for more input (i.e; continuation)
     PROMPT2 = "... ";
+    -- Whether to use color or not
+    COLOR = (not not os.getenv'TERM':find("color$"));
     -- Ran before the REPL begins
     preinit = function(env) end;
     -- Ran before the REPL exits
     atexit = function(env) end;
-    -- Whether to use color or not
-    COLOR = (not not os.getenv'TERM':find("color$"))
 }
 
 local seen = {}
