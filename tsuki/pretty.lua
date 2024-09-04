@@ -156,7 +156,7 @@ local function _pretty(val, tracking)
         if doc.type=="nil" then
             return doc_types.text"{}"
         end
-        last = doc[#doc]
+        last = doc[#doc].type=="concat" and doc[#doc] or doc
         last[#last]=nil last[#last]=nil
         return (doc_types.text("{")
             ..doc_types.line
