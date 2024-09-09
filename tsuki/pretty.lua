@@ -164,8 +164,24 @@ local function _pretty(val, tracking)
             ..doc_types.line
             ..doc_types.text("}")):coalesce()
     end
-    --TODO: function arg names (like CC:Tweaked)?
-    return doc_types.text(tostring(val))
+    if type(val)=="function" then
+        local info = debug.getinfo(val,"Su")
+        if not info then return doc_types.text(tostring(val), colors.gray) end
+        local doc
+        if info.short_src and info.linedefined and info.linedefined>=1 then
+            doc = doc_types.text(("function<%s:%d>"):format(info.short_src, info.linedefined), colors.gray)
+        else
+            doc = doc_types.text(tostring(val),colors.gray)
+        end
+        if info.what=="Lua" and info.nparams then
+            local args = {}
+            for i=1,info.nparams do args[i]=debug.getlocal(val, i) or "?" end
+            if info.isvararg then table.insert(arg,"...") end
+            doc = doc .. doc_types.text("(" .. table.concat(args, ", ") .. ")", colors.gray)
+        end
+        return doc
+    end
+    return doc_types.text(tostring(val),colors.gray)
 end
 
 function pretty.pretty(...)

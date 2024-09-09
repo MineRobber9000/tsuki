@@ -14,4 +14,6 @@ for i, name in ipairs{
     colors[name] = color(29+i)
 end
 
+colors.gray = color(90)
+
 return colors
