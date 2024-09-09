@@ -176,7 +176,7 @@ local function _pretty(val, tracking)
         if info.what=="Lua" and info.nparams then
             local args = {}
             for i=1,info.nparams do args[i]=debug.getlocal(val, i) or "?" end
-            if info.isvararg then table.insert(arg,"...") end
+            if info.isvararg then table.insert(args,"...") end
             doc = doc .. doc_types.text("(" .. table.concat(args, ", ") .. ")", colors.gray)
         end
         return doc
