@@ -121,6 +121,13 @@ local function _pretty(val, tracking)
             :gsub([[\13]],[[\r]])
             :gsub([[\9]],[[\t]])
             :gsub([[\11]],[[\v]])
+            :gsub("(.)",function(c)
+                local b = c:byte()
+                if b>0x7e then
+                    return [[\]]..b
+                end
+                return c
+            end)
         return doc_types.text(quoted,colors.RED)
     end
     if type(val)=="number" then
