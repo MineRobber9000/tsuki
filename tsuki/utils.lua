@@ -24,7 +24,7 @@ end
 
 function utils.configdirs()
     if utils.DIR_SEP=="/" then
-        local xdg_config_home = os.getenv'XDG_CONFIG_HOME' or utils.ensure_dir_sep(os.getenv'HOME')..".config"
+        local xdg_config_home = os.getenv'XDG_CONFIG_HOME' or utils.ensure_dir_sep(os.getenv'HOME' or '')..".config"
         local xdg_config_dirs = os.getenv'XDG_CONFIG_DIRS' or '/etc/xdg'
         local configdirs = {xdg_config_home}
         for path in string.gmatch(xdg_config_dirs,"[^:]+") do
@@ -38,7 +38,7 @@ end
 
 function utils.default_history()
     if utils.DIR_SEP=="/" then
-        local data_home = os.getenv'XDG_DATA_HOME' or utils.ensure_dir_sep(os.getenv'HOME')..".local/share"
+        local data_home = os.getenv'XDG_DATA_HOME' or utils.ensure_dir_sep(os.getenv'HOME' or '')..".local/share"
         return utils.ensure_dir_sep(data_home).."tsukihistory"
     else
         error("NYI: tsuki.utils.default_history on non-Unix")
